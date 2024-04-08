@@ -19,7 +19,7 @@ prefix = "data"
   depth = 2
   nshots = 100
   circuit = randomcircuit(N; depth=depth, twoqubitgates="CX", onequbitgates="Rx")
-  path = "data/test_data_writesamples.h5"
+  path = prefix*"/"*"test_data_writesamples.h5"
 
   X = runcircuit(circuit)
   data = getsamples(X, nshots)
