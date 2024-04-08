@@ -37,13 +37,13 @@ searchDir(path, key) = filter(x->(all([ occursin(k,x) for k in key ]) ), readdir
 filenames = searchDir("./",["test_",".jl"])
 
 @testset "PastaQ.jl" begin
-  # @testset "$filename" for filename in filenames
-  #   # if endswith(filename, ".jl") #&& startswith(filename, "test_") 
-  #     println("Running $filename")
-  #     @time include(filename)
-  #     # end 
-  # end
+  @testset "$filename" for filename in filenames
+    # if endswith(filename, ".jl") #&& startswith(filename, "test_") 
+      println("Running $filename")
+      @time include(filename)
+      # end 
+  end
 
-    @time include("test_io.jl")
+    #@time include("test_io.jl")
 
 end
