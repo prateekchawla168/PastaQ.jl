@@ -1,4 +1,6 @@
-const MOI = SCS.MathOptInterface
+using SCS
+import MathOptInterface
+const MOI = MathOptInterface
 
 function tomography(
   probabilities::Dict{Tuple,<:Dict},
@@ -34,14 +36,14 @@ function tomography(
     if (method == "LS" || method == "least_squares")
       # Minimize the cost function C = ||A ρ⃗ - p̂||²
       cost_function = Convex.norm(A * vec(ρ) - p)
-    elseif (method == "MLE" || method == "maximum_likelihood")
+    elseif (method == "ML" || method == "maximum_likelihood")
       # Minimize the negative log likelihood:
       cost_function = -p' * Convex.log(real(A * vec(ρ)) + 1e-10)
     else
       error("Tomography method not recognized
        Currently available methods: - LI  : linear inversion
                                       LS  : least squares
-                                      MLS : maximum likelihood")
+                                      ML : maximum likelihood")
     end
 
     # Contrained the trace and enforce positivity and hermitianity
