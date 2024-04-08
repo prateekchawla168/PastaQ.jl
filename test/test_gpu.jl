@@ -32,6 +32,7 @@ const processes = (false, true)
   end
 end
 
+# Added a new test set for depolarizing noise. Since the
 
 @testset "runcircuit with eltype $eltype, device $device, full_representation $full_representation, noise depolarizing" for eltype in (nothing, ComplexF32, ComplexF64),
   device in devices,

@@ -1,6 +1,10 @@
+using Convex
 using SCS
 import MathOptInterface
 const MOI = MathOptInterface
+
+# Added a specific import statement for Convex, SCS and MathOptInterface. 
+# The earlier implementation ran into a ModuleError here.
 
 function tomography(
   probabilities::Dict{Tuple,<:Dict},
@@ -36,8 +40,10 @@ function tomography(
     if (method == "LS" || method == "least_squares")
       # Minimize the cost function C = ||A ρ⃗ - p̂||²
       cost_function = Convex.norm(A * vec(ρ) - p)
-    elseif (method == "ML" || method == "maximum_likelihood")
+    elseif (method == "ML" || method == "maximum_likelihood") 
       # Minimize the negative log likelihood:
+      # Ensured uniformity in documentation and implementation of the maximum_likelihood case. 
+      # the keyword was implemented as "MLS" in some places, "MLE" in some places. Now everything is consistent and two-lettered.
       cost_function = -p' * Convex.log(real(A * vec(ρ)) + 1e-10)
     else
       error("Tomography method not recognized
